@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "waxed_workstations",
+	"version": "${version}",
+	"name": "Waxed Workstations",
+	"description": "Allows players to wax different POIs, like workstations and beds, making them unclaimable by villagers.",
+	"authors": [
+		"Diemond_Player"
+	],
+	"contact": {
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "ARR",
+	"icon": "assets/waxed_workstations/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.diemond_player.waxed_workstations.WaxedWorkstations"
+		]
+	},
+	"mixins": [
+		"waxed_workstations.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+	}
+}
