@@ -8,7 +8,7 @@
 		"Diemond_Player"
 	],
 	"contact": {
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/DiemondPlayer/WaxedWorkstations"
 	},
 	"license": "ARR",
 	"icon": "assets/waxed_workstations/icon.png",
