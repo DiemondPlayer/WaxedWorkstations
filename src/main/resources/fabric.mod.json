@@ -3,7 +3,7 @@
 	"id": "waxed_workstations",
 	"version": "${version}",
 	"name": "Waxed Workstations",
-	"description": "Allows players to wax different POIs, like workstations and beds, making them unclaimable by villagers.",
+	"description": "Wax different POIs, like workstations and beds, making them unclaimable by villagers. Highly configurable.",
 	"authors": [
 		"Diemond_Player"
 	],
@@ -25,7 +25,8 @@
 		"fabricloader": ">=0.16.10",
 		"minecraft": "~1.20.1",
 		"java": ">=17",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"midnightlib": ">=1.4.1"
 	},
 	"suggests": {
 	}
