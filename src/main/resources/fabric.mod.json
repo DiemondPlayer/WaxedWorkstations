@@ -16,6 +16,9 @@
 	"entrypoints": {
 		"main": [
 			"net.diemond_player.waxed_workstations.WaxedWorkstations"
+		],
+		"client":[
+			"net.diemond_player.waxed_workstations.WaxedWorkstationsClient"
 		]
 	},
 	"mixins": [
@@ -23,7 +26,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.16.10",
-		"minecraft": "~1.20.1",
+		"minecraft": "~1.21",
 		"java": ">=17",
 		"fabric-api": "*",
 		"midnightlib": ">=1.4.1"
