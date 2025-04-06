@@ -30,7 +30,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -47,7 +47,7 @@ import static net.diemond_player.waxed_workstations.WaxedWorkstationsClient.WAX_
 public class WaxedWorkstations implements ModInitializer {
     public static final String MOD_ID = "waxed_workstations";
 
-	private static TypedActionResult<ItemStack> interact(PlayerEntity playerEntity, World world, Hand hand) {
+	private static ActionResult interact(PlayerEntity playerEntity, World world, Hand hand) {
 		ItemStack itemStack = playerEntity.getStackInHand(hand);
 		if (!playerEntity.isSpectator()) {
 			HitResult hitResult = playerEntity.raycast(4.5, 1.0F, false);
@@ -63,37 +63,37 @@ public class WaxedWorkstations implements ModInitializer {
 				if (optional.isPresent()) {
 					if (optional.get().getKey().get() == PointOfInterestTypes.HOME) {
 						if(!WaxedWorkstationsConfig.enableWaxingBeds) {
-							return TypedActionResult.pass(itemStack);
+							return ActionResult.PASS;
 						}
 					} else if (optional.get().isIn(PointOfInterestTypeTags.ACQUIRABLE_JOB_SITE)) {
 						if(!WaxedWorkstationsConfig.enableWaxingWorkstations) {
-							return TypedActionResult.pass(itemStack);
+							return ActionResult.PASS;
 						}
 					} else if (optional.get().getKey().get() == PointOfInterestTypes.MEETING) {
 						if(!WaxedWorkstationsConfig.enableWaxingBells) {
-							return TypedActionResult.pass(itemStack);
+							return ActionResult.PASS;
 						}
 					} else if (optional.get().getKey().get() == PointOfInterestTypes.LODESTONE) {
 						if(!WaxedWorkstationsConfig.enableWaxingLodestones) {
-							return TypedActionResult.pass(itemStack);
+							return ActionResult.PASS;
 						}
 					} else if (optional.get().getKey().get() == PointOfInterestTypes.LIGHTNING_ROD) {
 						if(!WaxedWorkstationsConfig.enableWaxingLightningRods) {
-							return TypedActionResult.pass(itemStack);
+							return ActionResult.PASS;
 						}
 					} else if (optional.get().getKey().get() == PointOfInterestTypes.NETHER_PORTAL) {
 						if(!WaxedWorkstationsConfig.enableWaxingNetherPortals) {
-							return TypedActionResult.pass(itemStack);
+							return ActionResult.PASS;
 						}
 					} else if (optional.get().isIn(PointOfInterestTypeTags.BEE_HOME)) {
 						if(!WaxedWorkstationsConfig.enableWaxingBeehives) {
-							return TypedActionResult.pass(itemStack);
+							return ActionResult.PASS;
 						}
 					} else if (!WaxedWorkstationsConfig.enableWaxingEtc) {
-						return TypedActionResult.pass(itemStack);
+						return ActionResult.PASS;
 					}
 				} else {
-					return TypedActionResult.pass(itemStack);
+					return ActionResult.PASS;
 				}
 				if (WaxedWorkstationsConfig.waxingItems.contains(Registries.ITEM.getId(itemStack.getItem()).toString())
 						|| WaxedWorkstationsConfig.waxingItems.stream().filter(s -> s.startsWith("tag ")).anyMatch(s -> itemStack.isIn(TagKey.of(RegistryKeys.ITEM, Identifier.of(s.substring(4)))))) {
@@ -120,7 +120,7 @@ public class WaxedWorkstations implements ModInitializer {
 									itemStack.decrement(WaxedWorkstationsConfig.waxingConsumeAmount);
 								}
 							}
-							return TypedActionResult.success(itemStack, true);
+							return ActionResult.SUCCESS;
 						}
 					}
 
@@ -150,15 +150,15 @@ public class WaxedWorkstations implements ModInitializer {
 									itemStack.decrement(WaxedWorkstationsConfig.unwaxingConsumeAmount);
 								}
 							}
-							return TypedActionResult.success(itemStack, true);
+							return ActionResult.SUCCESS;
 						}
 					}
 
 				}
 			}
-			return TypedActionResult.pass(itemStack);
+			return ActionResult.PASS;
 		}
-		return TypedActionResult.fail(itemStack);
+		return ActionResult.FAIL;
 	}
 
 	@Override

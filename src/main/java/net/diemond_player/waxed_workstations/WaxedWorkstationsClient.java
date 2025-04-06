@@ -21,11 +21,13 @@ public class WaxedWorkstationsClient implements ClientModInitializer {
             context.client().execute(() -> {
                 context.client().world.playSound(context.client().player, payload.pos(), SoundEvents.ITEM_AXE_WAX_OFF, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 context.client().world.syncWorldEvent(context.client().player, WorldEvents.WAX_REMOVED, payload.pos(), 0);
+                context.client().player.swingHand(context.client().player.getActiveHand());
             });
         });
         ClientPlayNetworking.registerGlobalReceiver(WaxWorkstationPacket.ID, (payload, context) -> {
             context.client().execute(() -> {
                 context.client().world.syncWorldEvent(context.client().player, WorldEvents.BLOCK_WAXED, payload.pos(), 0);
+                context.client().player.swingHand(context.client().player.getActiveHand());
             });
         });
     }
