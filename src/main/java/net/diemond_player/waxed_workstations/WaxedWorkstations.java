@@ -40,6 +40,9 @@ import java.util.Optional;
 
 public class WaxedWorkstations implements ModInitializer {
     public static final String MOD_ID = "waxed_workstations";
+	public static final Identifier WAX_WORKSTATION_PACKET_ID = Identifier.of(WaxedWorkstations.MOD_ID, "wax_workstation");
+	public static final Identifier UNWAX_WORKSTATION_PACKET_ID = Identifier.of(WaxedWorkstations.MOD_ID, "unwax_workstation");
+
 
 	private static TypedActionResult<ItemStack> interact(PlayerEntity playerEntity, World world, Hand hand) {
 		ItemStack itemStack = playerEntity.getStackInHand(hand);
@@ -158,10 +161,10 @@ public class WaxedWorkstations implements ModInitializer {
 	@Override
     public void onInitialize() {
 
-		MidnightConfig.init(MOD_ID, WaxedWorkstationsConfig.class);
-
 		PayloadTypeRegistry.playS2C().register(WaxWorkstationPacket.ID, WaxWorkstationPacket.CODEC);
 		PayloadTypeRegistry.playS2C().register(UnwaxWorkstationPacket.ID, UnwaxWorkstationPacket.CODEC);
+
+		MidnightConfig.init(MOD_ID, WaxedWorkstationsConfig.class);
 
 		UseItemCallback.EVENT.register(WaxedWorkstations::interact);
 	}

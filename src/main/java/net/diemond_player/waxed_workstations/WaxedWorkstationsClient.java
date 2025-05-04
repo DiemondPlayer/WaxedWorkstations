@@ -6,13 +6,10 @@ import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.WorldEvents;
 
 
 public class WaxedWorkstationsClient implements ClientModInitializer {
-    public static final Identifier WAX_WORKSTATION_PACKET_ID = Identifier.of(WaxedWorkstations.MOD_ID, "wax_workstation");
-    public static final Identifier UNWAX_WORKSTATION_PACKET_ID = Identifier.of(WaxedWorkstations.MOD_ID, "unwax_workstation");
 
     @Override
     public void onInitializeClient() {
