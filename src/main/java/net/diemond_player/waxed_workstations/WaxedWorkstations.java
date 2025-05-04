@@ -4,9 +4,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.diemond_player.waxed_workstations.payload.UnwaxWorkstationPacket;
 import net.diemond_player.waxed_workstations.payload.WaxWorkstationPacket;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.advancement.criterion.Criteria;
@@ -16,7 +14,6 @@ import net.minecraft.block.enums.BedPart;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -28,9 +25,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -41,11 +38,11 @@ import net.minecraft.world.poi.PointOfInterestTypes;
 
 import java.util.Optional;
 
-import static net.diemond_player.waxed_workstations.WaxedWorkstationsClient.UNWAX_WORKSTATION_PACKET_ID;
-import static net.diemond_player.waxed_workstations.WaxedWorkstationsClient.WAX_WORKSTATION_PACKET_ID;
-
 public class WaxedWorkstations implements ModInitializer {
     public static final String MOD_ID = "waxed_workstations";
+	public static final Identifier WAX_WORKSTATION_PACKET_ID = Identifier.of(WaxedWorkstations.MOD_ID, "wax_workstation");
+	public static final Identifier UNWAX_WORKSTATION_PACKET_ID = Identifier.of(WaxedWorkstations.MOD_ID, "unwax_workstation");
+
 
 	private static ActionResult interact(PlayerEntity playerEntity, World world, Hand hand) {
 		ItemStack itemStack = playerEntity.getStackInHand(hand);
