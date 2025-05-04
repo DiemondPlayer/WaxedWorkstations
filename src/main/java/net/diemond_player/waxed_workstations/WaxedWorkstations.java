@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
@@ -39,6 +40,7 @@ import java.util.Optional;
 
 public class WaxedWorkstations implements ModInitializer {
     public static final String MOD_ID = "waxed_workstations";
+	public static final String MIDNIGHT_LIB_MOD_ID = "midnightlib";
     public static final Identifier WAX_WORKSTATION_PACKET_ID = new Identifier(WaxedWorkstations.MOD_ID, "wax_workstation");
     public static final Identifier UNWAX_WORKSTATION_PACKET_ID = new Identifier(WaxedWorkstations.MOD_ID, "unwax_workstation");
 
@@ -122,12 +124,6 @@ public class WaxedWorkstations implements ModInitializer {
 							return TypedActionResult.success(itemStack, true);
 						}
 					}
-					ClientPlayNetworking.registerGlobalReceiver(WAX_WORKSTATION_PACKET_ID, (client, handler, buf, responseSender) -> {
-						BlockPos blockPos1 = buf.readBlockPos();
-						client.execute(() -> {
-							world.syncWorldEvent(playerEntity, WorldEvents.BLOCK_WAXED, blockPos1, 0);
-						});
-					});
 				} else if (WaxedWorkstationsConfig.unwaxingItems.contains(Registries.ITEM.getId(itemStack.getItem()).toString())
 						|| WaxedWorkstationsConfig.unwaxingItems.stream().filter(s -> s.startsWith("tag ")).anyMatch(s -> itemStack.isIn(TagKey.of(RegistryKeys.ITEM, new Identifier(s.substring(4)))))) {
 					if (!world.isClient()) {
@@ -161,14 +157,6 @@ public class WaxedWorkstations implements ModInitializer {
 							return TypedActionResult.success(itemStack, true);
 						}
 					}
-					ClientPlayNetworking.registerGlobalReceiver(UNWAX_WORKSTATION_PACKET_ID, (client, handler, buf, responseSender) -> {
-						BlockPos blockPos1 = buf.readBlockPos();
-						client.execute(() -> {
-							world.playSound(playerEntity, blockPos1, SoundEvents.ITEM_AXE_WAX_OFF, SoundCategory.BLOCKS, 1.0F, 1.0F);
-							world.syncWorldEvent(playerEntity, WorldEvents.WAX_REMOVED, blockPos1, 0);
-						});
-					});
-
 				}
 			}
 			return TypedActionResult.pass(itemStack);
@@ -178,8 +166,9 @@ public class WaxedWorkstations implements ModInitializer {
 
 	@Override
     public void onInitialize() {
-
-		MidnightConfig.init(MOD_ID, WaxedWorkstationsConfig.class);
+		if(FabricLoader.getInstance().isModLoaded(MIDNIGHT_LIB_MOD_ID)) {
+			MidnightConfig.init(MOD_ID, WaxedWorkstationsConfig.class);
+		}
 
 		UseItemCallback.EVENT.register(WaxedWorkstations::interact);
 	}
