@@ -5,7 +5,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.BlockState;
@@ -39,7 +38,6 @@ import java.util.Optional;
 
 public class WaxedWorkstations implements ModInitializer {
     public static final String MOD_ID = "waxed_workstations";
-	public static final String MIDNIGHT_LIB_MOD_ID = "midnightlib";
     public static final Identifier WAX_WORKSTATION_PACKET_ID = new Identifier(WaxedWorkstations.MOD_ID, "wax_workstation");
     public static final Identifier UNWAX_WORKSTATION_PACKET_ID = new Identifier(WaxedWorkstations.MOD_ID, "unwax_workstation");
 
@@ -165,9 +163,7 @@ public class WaxedWorkstations implements ModInitializer {
 
 	@Override
     public void onInitialize() {
-		if(FabricLoader.getInstance().isModLoaded(MIDNIGHT_LIB_MOD_ID)) {
-			MidnightConfig.init(MOD_ID, WaxedWorkstationsConfig.class);
-		}
+		MidnightConfig.init(MOD_ID, WaxedWorkstationsConfig.class);
 
 		UseItemCallback.EVENT.register(WaxedWorkstations::interact);
 	}
