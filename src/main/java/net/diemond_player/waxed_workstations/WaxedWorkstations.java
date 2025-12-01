@@ -19,7 +19,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.PointOfInterestTypeTags;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.network.DebugInfoSender;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -100,7 +99,6 @@ public class WaxedWorkstations implements ModInitializer {
 						if (serverWorld.getPointOfInterestStorage().hasTypeAt(optional.get().getKey().get(), blockPos2)) {
 							serverWorld.getServer().execute(() -> {
 								serverWorld.getPointOfInterestStorage().remove(blockPos2);
-								DebugInfoSender.sendPoiRemoval(serverWorld, blockPos2);
 							});
 
 							ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, new WaxWorkstationPacket(blockPos));
@@ -112,7 +110,7 @@ public class WaxedWorkstations implements ModInitializer {
 							}
 							if (!playerEntity.isCreative()) {
 								if (itemStack.isDamageable()) {
-									itemStack.damage(WaxedWorkstationsConfig.waxingConsumeAmount, playerEntity, LivingEntity.getSlotForHand(hand));
+									itemStack.damage(WaxedWorkstationsConfig.waxingConsumeAmount, playerEntity, hand);
 								} else {
 									itemStack.decrement(WaxedWorkstationsConfig.waxingConsumeAmount);
 								}
@@ -129,7 +127,6 @@ public class WaxedWorkstations implements ModInitializer {
 						if (!serverWorld.getPointOfInterestStorage().hasTypeAt(optional.get().getKey().get(), blockPos2)) {
 							serverWorld.getServer().execute(() -> {
 								serverWorld.getPointOfInterestStorage().add(blockPos2, optional.get());
-								DebugInfoSender.sendPoiAddition(serverWorld, blockPos2);
 							});
 
 							ServerPlayNetworking.send((ServerPlayerEntity) playerEntity, new UnwaxWorkstationPacket(blockPos));
@@ -142,7 +139,7 @@ public class WaxedWorkstations implements ModInitializer {
 							}
 							if (!playerEntity.isCreative()) {
 								if (itemStack.isDamageable()) {
-									itemStack.damage(WaxedWorkstationsConfig.unwaxingConsumeAmount, playerEntity, LivingEntity.getSlotForHand(hand));
+									itemStack.damage(WaxedWorkstationsConfig.unwaxingConsumeAmount, playerEntity, hand);
 								} else {
 									itemStack.decrement(WaxedWorkstationsConfig.unwaxingConsumeAmount);
 								}
