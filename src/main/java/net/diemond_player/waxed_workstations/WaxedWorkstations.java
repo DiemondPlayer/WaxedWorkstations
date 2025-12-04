@@ -157,7 +157,6 @@ public class WaxedWorkstations implements ModInitializer {
 
 	@Override
     public void onInitialize() {
-
 		MidnightConfig.init(MOD_ID, WaxedWorkstationsConfig.class);
 
 		PayloadTypeRegistry.playS2C().register(WaxWorkstationPacket.ID, WaxWorkstationPacket.CODEC);
